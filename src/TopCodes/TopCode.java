@@ -24,6 +24,8 @@
  */
 package TopCodes;
 
+
+
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
@@ -142,6 +144,14 @@ public class TopCode {
       return this.unit * WIDTH;
    }
    
+   
+
+@Override
+public String toString() {
+	// TODO Auto-generated method stub
+	return String.valueOf(this.code);
+}
+
 
 /**
  * Sets the diameter of this code in pixels.
