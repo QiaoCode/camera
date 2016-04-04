@@ -2,27 +2,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
+
+      <Button
+          android:id="@+id/bt_run"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentTop="true"
+          android:text="@string/start" />
+      
     <ImageView 
         android:id="@+id/imageView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="34dp"
-        android:layout_marginTop="36dp"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
         android:contentDescription="@string/hello_world"
         android:src="@drawable/ic_launcher"/>
-    "
+
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/bt_run"
+        android:layout_centerHorizontal="true"
+        android:text="@string/tap"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/timertext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/bt_run"
+        android:layout_toRightOf="@+id/bt_run"
+        android:text="@string/start"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/runtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/timertext"
         android:layout_alignRight="@+id/imageView1"
-        android:text="@string/tap" 
-        android:textAppearance="?android:attr/textAppearanceLarge"/>
+        android:layout_toLeftOf="@+id/timertext"
+        android:text="@string/list"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

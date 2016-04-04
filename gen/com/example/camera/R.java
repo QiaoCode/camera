@@ -26,9 +26,12 @@ public final class R {
         public static final int run_press=0x7f020002;
     }
     public static final class id {
-        public static final int action_settings=0x7f080002;
-        public static final int imageView1=0x7f080000;
-        public static final int textView1=0x7f080001;
+        public static final int action_settings=0x7f080005;
+        public static final int bt_run=0x7f080000;
+        public static final int imageView1=0x7f080001;
+        public static final int runtext=0x7f080004;
+        public static final int textView1=0x7f080002;
+        public static final int timertext=0x7f080003;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -40,6 +43,11 @@ public final class R {
         public static final int action_settings=0x7f050001;
         public static final int app_name=0x7f050000;
         public static final int hello_world=0x7f050002;
+        public static final int list=0x7f050004;
+        public static final int pause=0x7f050007;
+        public static final int resume=0x7f050008;
+        public static final int start=0x7f050005;
+        public static final int stop=0x7f050006;
         public static final int tap=0x7f050003;
     }
     public static final class style {

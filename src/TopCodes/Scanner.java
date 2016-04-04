@@ -19,7 +19,7 @@ import android.util.Log;
 public class Scanner {
 
 
-   private static final String TAG = "start";
+   private static final String TAG = "ListStart";
 
 /** Total width of image */
    protected int w;
