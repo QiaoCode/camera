@@ -51,10 +51,10 @@ public class MainActivity extends Activity {
     
     private static int delay=1000;//1s
     private static int period=1000;//1s
-    
+    private static int delay2=1000;//1s
+    private static int period2=1000;//1s
     protected static final int UPDATE_TEXTVIEW = 0;
 	protected static final int UPDATE_RUNTEXT = 0;
-	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +62,6 @@ public class MainActivity extends Activity {
         bt_run=(Button)findViewById(R.id.bt_run);
         runtext=(TextView)findViewById(R.id.runtext);
         timertext=(TextView)findViewById(R.id.timertext);
-
         imgFavorite=(ImageView)findViewById(R.id.imageView1);
         imgFavorite.setOnClickListener(new OnClickListener(){
         	@Override
@@ -70,11 +69,15 @@ public class MainActivity extends Activity {
         		open();
         	}
         });
-        //startTimer();
+        startTimer();
         //设置runAll监听
         bt_run.setOnClickListener(new Button.OnClickListener(){
 			@Override
 			public void onClick(View v) {
+				rcount = 0; 
+				startList();
+				Log.e(TAG,"startbutton");
+				/*
 				// TODO Auto-generated method stub
 				isStop=!isStop;
 				
@@ -91,7 +94,7 @@ public class MainActivity extends Activity {
 				}else{
 					bt_run.setText(R.string.stop);
 				}
-			}
+			*/}
         });
         
         mHandler=new Handler(){
@@ -107,9 +110,11 @@ public class MainActivity extends Activity {
         };
         rHandler=new Handler(){
         	public void handleMessage(Message msg){
+        		Log.e(TAG,"handleMessage");
         		switch (msg.what){
         		case UPDATE_RUNTEXT:
         			updateRunText();
+        			rcount++;
         		    break;
         		default:
         			break;
@@ -121,34 +126,67 @@ public class MainActivity extends Activity {
 		// TODO Auto-generated method stub
 		TopCodesList=null;
 	}
+	private void stopList(){
+		Log.e(TAG, "stopList");
+		if (rTimer != null) {  
+            rTimer.cancel();  
+            rTimer = null;  
+        }  
+  
+        if (rTimerTask != null) {  
+            rTimerTask.cancel();  
+            rTimerTask = null;  
+        }     
+		rcount = 0;
+	}
 	//************************************
     private TopCode getInstructions(){
-    	for(int i=0;i<TopCodesList.size();i++){
-    		Instruction=TopCodesList.get(i);
-    		Log.e(TAG,"Instruction-->"+String.valueOf(Instruction));
-    		try {  
-                Log.i(TAG, "wait(2000)...");  
-                Thread.sleep(2000);  
-            } catch (InterruptedException e) {  
-            }
+    	if(rcount<TopCodesList.size()){
+    		Instruction=TopCodesList.get(rcount);
+    		Log.e(TAG,"getInstructions"+String.valueOf(Instruction));
+       	    Log.e(TAG,"rcount"+rcount);
+    	}else{ 
+    		Instruction=TopCodesList.get(TopCodesList.size()-1);
+    		stopList();
     	}
     	//runtext.setText(String.valueOf(Instruction)); 
     		//rHandler.sendEmptyMessageDelayed(UPDATE_RUNTEXT, 5 * 1000);
-    		return Instruction;
+    	//return String.valueOf(Instruction);
+    	return Instruction;
     }
     protected void updateRunText() {
 	     runtext.setText(String.valueOf(getInstructions()));
-	     Log.e(TAG,"getruncount--"+getInstructions());
-	     sendRunMessage(UPDATE_RUNTEXT);      
+    	 Log.e(TAG,"updateRunText-->"+getInstructions());
+	     //sendRunMessage(UPDATE_RUNTEXT);      
 	}
    public void sendRunMessage(int id){ //调用的是Handler中的sendMessage(Message msg) 
-       if (rHandler != null) {  
+       Log.e(TAG,"sendRunMessage-->");
+	   if (rHandler != null) {  
            Message message = Message.obtain(rHandler, id); 
            rHandler.sendMessage(message);   
-       }  
+       }   
    }  
    public void startList() {
-   	sendRunMessage(UPDATE_RUNTEXT);
+	   Log.e(TAG,"startlist");
+       if (rTimer == null) {  
+           rTimer = new Timer();  
+       }  
+ 
+       if (rTimerTask == null) {  
+           rTimerTask = new TimerTask() {  
+               @Override  
+               public void run() {  
+                   //Log.i(TAG, "count: "+String.valueOf(count));  
+            	   Log.e(TAG,"startsendrun()");
+                   sendRunMessage(UPDATE_RUNTEXT);
+               }  
+           };  
+       }  
+ 
+       if(rTimer != null && rTimerTask != null )  
+           rTimer.schedule(rTimerTask, delay2, period2);  
+ 
+   
    } 
    //*******************************
     private void startTimer(){  
@@ -199,9 +237,9 @@ public class MainActivity extends Activity {
 				//request 0  result -1
 				Scanner scanner=new Scanner();
 			   	TopCodesList=scanner.scan(bp);//返回spots列表
-			   	Log.i(TAG, "spots-->"+TopCodesList);
+			   	Log.e(TAG, "spots-->"+TopCodesList);
+	    		Log.e(TAG,"getListSize"+String.valueOf(TopCodesList.size()));
 				imgFavorite.setImageBitmap(bp);
-
 				}
 		 
 	 }
